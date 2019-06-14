@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class TAGS(Enum):
-    NEXT_CMD = 0
-    COMMA = 1
+    NEXT_CMD = 0 #reserved
+    COMMA = 1    #reserved
     PLUS = 2
     MINUS = 3
     MULTI = 4
@@ -19,22 +19,24 @@ class TAGS(Enum):
     NOT = 14
     TRUE = 15
     FALSE = 16
-    IF = 17
-    ASSIGN = 18
+    IF = 17      #reserved
+    ASSIGN = 18  #reserved
     SKOBA_LEFT = 19
     SKOBA_RIGHT = 20
-    THEN = 21
-    WHILE = 22
-    BEGIN = 23
-    END = 24
-    DO = 25
-    RETURN = 26
-    PENTOO = 27
-    LOOKIN = 28
-    PROGA = 29
+    THEN = 21    #reserved
+    WHILE = 22   #reserved
+    BEGIN = 23   #reserved
+    END = 24     #reserved
+    DO = 25      #reserved
+    RETURN = 26  #reserved
+    PENTOO = 27  #reserved
+    LOOKIN = 28  #reserved
+    PROGA = 29   #reserved
     INT = 30
     ID = 31
     STRING = 32
+
+    ID_OR_NUM_OR_OPERATION = 33
 
 token_exprs = [
     (r'[ \t]+',    None),
