@@ -50,18 +50,16 @@ proga1 = [
     "input",
     "b",
     "write_cond",
-    "b < 10 ",
+    "b < 100 ",
     "not_cond_goto",
     "13",
     "write_to",
     "b",
-    "b + 1",
+    "b + 2",
     "print",
     "b",
     "goto",
-    "2",
-    "print",
-    "b"
+    "2"
 ]
 
 p1 = Interpretator(proga1)
