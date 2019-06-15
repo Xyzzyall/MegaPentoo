@@ -1,0 +1,53 @@
+pentoo "Math Test:"
+
+pentoo "(5 + 5) * 1 - 10 / 2 = "
+a = (5 + 5) * 1 - 10 / 2
+pentoo a
+
+pentoo "Boolean Test:"
+
+pentoo "a=5,b=6,c=7,d=8"
+pentoo "a <= b :"
+a = 5
+b = 6
+c = 7
+d = 8
+if a <= b then
+    pentoo "pass"
+
+pentoo "d >= c : "
+if d >= c then
+    pentoo "pass"
+
+pentoo "a != b :"
+if a != b then
+    pentoo "pass"
+
+pentoo "a == b or c > d :"
+if not(a == b or c >= d) then
+    pentoo "false (pass)"
+
+pentoo "a != b and c < d :"
+if a != b and c < d then
+    pentoo "true (pass)"
+
+while d <= 10 do
+    a = a + b
+    d = d + 1
+    pentoo "while repeating"
+    end
+pentoo a
+
+pentoo "Linked List Test:"
+
+LinkedList Kai
+Kai.append(7)
+Kai.append(3)
+Kai.append(16)
+pentoo Kai
+Kai.insert(1,20)
+pentoo Kai
+Kai.delete(2)
+pentoo Kai
+pentoo Kai.get_last()
+pentoo Kai.index(0)
