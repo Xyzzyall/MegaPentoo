@@ -1,4 +1,4 @@
-
+from MegaPentoo.Interpretator.LinkedList import Elem
 
 
 class Interpretator:
@@ -42,7 +42,7 @@ class Interpretator:
                 inp = input()
                 exec(op1 + "= " + inp, globals())
             elif current_elem == "direct":
-                exec(op1)
+                exec(op1, globals())
                 i += 1
 
             i = i + 1

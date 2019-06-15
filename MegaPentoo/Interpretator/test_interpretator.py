@@ -24,7 +24,13 @@ test1 = """
     pentoo b
     pentoo c+1
     
-    
+    LinkedList foo
+    foo.append(1)
+    foo.append(2)
+    foo.append(3)
+    foo.append(4)
+    foo.insert(2,10)
+    pentoo foo
 """
 
 

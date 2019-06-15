@@ -41,10 +41,7 @@ tests = [
         end    
     """,
     """
-    lookin a
-    if a > 3 then 
-        print(a)
-    end
+    asdf.index(1)[]
     """
 ]
 

@@ -79,8 +79,8 @@ token_exprs = [
     (r'lookin',                TAGS.LOOKIN),   # write analog
     (r'proga',                 TAGS.PROGA),   # function analog
     (r'[0-9]+',                TAGS.INT),
+    (r'LinkedList', TAGS.LINKED_LIST),
+    (r'[A-Za-z][A-Za-z0-9_]*[\.][A-Za-z][A-Za-z0-9-(-)-,_]*', TAGS.CLASS_OBJECT),
     (r'[A-Za-z][A-Za-z0-9_]*', TAGS.ID),
-    (r'[A-Za-z][A-Za-z0-9_][\.]*', TAGS.CLASS_OBJECT),
-    (r'".+"',                  TAGS.STRING),
-    (r'LinkedList',                 TAGS.LINKED_LIST)
+    (r'".+"',                  TAGS.STRING)
 ]

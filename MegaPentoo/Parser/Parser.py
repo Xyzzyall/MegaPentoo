@@ -124,7 +124,8 @@ class Parser:
                     else:
                         self.__str_buf__ += name
                 elif state == STATES.LIST:
-                    self.__append_command__(name)
+                    print(state)
+                    self.__append_command__(name + "=Elem(0,None,None)")
                     state = None
                     expected_token = None
 
@@ -163,6 +164,7 @@ class Parser:
                     self.__append_command__(name)
                 elif tag == TAGS.LINKED_LIST:
                     expected_token = TAGS.ID
+                    state = STATES.LIST
                     self.__append_command__("direct")
 
 

@@ -34,6 +34,7 @@ class Elem:
         last.next = L
 
     def insert(self, i, val):
+        i -= 1
         if i == -1:
             L = Elem(val, self, None)
             self.prev = L
