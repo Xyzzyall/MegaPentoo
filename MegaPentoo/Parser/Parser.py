@@ -1,8 +1,12 @@
 from enum import Enum
 from MegaPentoo.Lexer.Tokens import TAGS
 
+
 class STATES(Enum):
     ASSIGNING = 0
+    IF = 1
+    WHILE = 2
+
 
 class Parser:
     def put_token(self, token):
@@ -10,15 +14,30 @@ class Parser:
 
     @staticmethod
     def __check_tag__(tag, expected):
-        if expected == None:
-            return False
-        elif expected == TAGS.ID_OR_NUM_OR_OPERATION:
-            return not (tag == TAGS.ID or tag == TAGS.AND or tag == TAGS.DIV or tag == TAGS.MULTI or \
+        not_command = tag == TAGS.ID or tag == TAGS.AND or tag == TAGS.DIV or tag == TAGS.MULTI or \
                        tag == TAGS.PLUS or tag == TAGS.BOOL_EQUAL or tag == TAGS.NOT or tag == TAGS.OR or \
                        tag == TAGS.INT or tag == TAGS.TRUE or tag == TAGS.SKOBA_LEFT or tag == TAGS.SKOBA_RIGHT or \
                        tag == TAGS.MINUS or tag == TAGS.MORE or tag == TAGS.LESS or tag == TAGS.LESS_EQUAL or \
-                       tag == TAGS.STRING or tag == TAGS.NEXT_CMD)
-        else: return tag != expected
+                       tag == TAGS.STRING
+
+        command = not (tag == TAGS.AND or tag == TAGS.DIV or tag == TAGS.MULTI or \
+                       tag == TAGS.PLUS or tag == TAGS.BOOL_EQUAL or tag == TAGS.NOT or tag == TAGS.OR or \
+                       tag == TAGS.INT or tag == TAGS.TRUE or tag == TAGS.SKOBA_LEFT or tag == TAGS.SKOBA_RIGHT or \
+                       tag == TAGS.MINUS or tag == TAGS.MORE or tag == TAGS.LESS or tag == TAGS.LESS_EQUAL or \
+                       tag == TAGS.STRING)
+
+        if not expected:
+            return False
+        elif expected == TAGS.ID_OR_NUM_OR_OPERATION:
+            return not not_command and not tag == TAGS.NEXT_CMD
+        elif expected == TAGS.IF_CHECK:
+            return (not not_command) and (not TAGS.THEN)
+        elif expected == TAGS.WHILE_CHECK:
+            return (not not_command) and (not TAGS.DO)
+        elif expected == TAGS.COMMAND:
+            return not command
+        else:
+            return tag != expected
 
     def __if__(self, step):
         pass
@@ -31,6 +50,8 @@ class Parser:
         state = None
         state_pos = 1
 
+        i = 0
+
         for name, tag in tokens:
             if Parser.__check_tag__(tag, expected_token):
                 raise NotExpected("Expected " + str(expected_token) + ", given " + str(tag))
@@ -42,20 +63,85 @@ class Parser:
                         state_pos = 2
                     elif state_pos == 2:
                         if tag == TAGS.NEXT_CMD:
-                            self.__program__.append(self.__str_buf__)
+                            self.__append_command__(self.__str_buf__)
+                            self.__str_buf__ = ""
                             expected_token = None
                             state = None
-                            state_pos = 0
+                            state_pos = 1
                         else:
                             self.__str_buf__ += name
+                elif state == STATES.IF:
+                    if state_pos == 1:
+                        self.__str_buf__ += name
+                        expected_token = TAGS.IF_CHECK
+                        state_pos = 2
+                    elif state_pos == 2:
+                        if tag == TAGS.THEN:
+                            self.__append_command__(self.__str_buf__)
+                            self.__append_command__("not_cond_goto")
+                            self.__push_backturn__(TAGS.IF)
+                            self.__append_command__(None)
+                            state = None
+                            self.__str_buf__ = ""
+                            expected_token = TAGS.COMMAND
+                            state_pos = 1
+                        else:
+                            self.__str_buf__ += name
+                elif state == STATES.WHILE:
+                    if state_pos == 1:
+                        self.__str_buf__ += name
+                        expected_token = TAGS.WHILE_CHECK
+                        state_pos = 2
+                    elif state_pos == 2:
+                        if tag == TAGS.DO:
+                            self.__append_command__(self.__str_buf__)
+                            self.__append_command__("not_cond_goto")
+                            self.__push_backturn__(TAGS.WHILE)
+                            self.__append_command__(None)
+                            state = None
+                            self.__str_buf__ = ""
+                            expected_token = TAGS.COMMAND
+                            state_pos = 1
+                        else:
+                            self.__str_buf__ += name
+
             else:
                 if tag == TAGS.ID:
                     expected_token = TAGS.ASSIGN
-                    self.__program__.append("write_to")
-                    self.__program__.append(name)
+                    self.__append_command__("write_to")
+                    self.__append_command__(name)
                     state = STATES.ASSIGNING
                 elif tag == TAGS.IF:
-                    self.__program__.append("not_cond_goto")
+                    self.__append_command__("write_cond")
+                    state = STATES.IF
+                    expected_token = TAGS.ID_OR_NUM_OR_OPERATION
+                elif tag == TAGS.END:
+                    b_tag, b_pos1, b_pos2 = self.__pop_backturn__()
+                    if b_tag == TAGS.IF:
+                        self.__program__[b_pos2] = str(self.__cur_cmd__)
+                    elif b_tag == TAGS.WHILE:
+                        self.__append_command__("goto")
+                        self.__append_command__(str(b_pos1))
+                        self.__program__[b_pos2] = str(self.__cur_cmd__)
+
+                elif tag == TAGS.WHILE:
+                    self.__append_command__("write_cond")
+                    state = STATES.WHILE
+                    expected_token = TAGS.ID_OR_NUM_OR_OPERATION
+
+    __backturns_stack__ = list()
+
+    __cur_cmd__ = 0
+
+    def __append_command__(self, cmd):
+        self.__program__.append(cmd)
+        self.__cur_cmd__ += 1
+
+    def __push_backturn__(self, tag):
+        self.__backturns_stack__.append((tag, len(self.__program__)-1, len(self.__program__)))
+
+    def __pop_backturn__(self):
+        return self.__backturns_stack__.pop()
 
     def get_program(self):
         return self.__program__
@@ -65,15 +151,4 @@ class NotExpected(Exception):
     pass
 
 
-test = [
-    ("a", TAGS.ID),
-    ("=", TAGS.ASSIGN),
-    ("1", TAGS.INT),
-    ("+", TAGS.PLUS),
-    ("2", TAGS.INT),
-    ("\n", TAGS.NEXT_CMD)
-]
 
-t1 = Parser()
-t1.analyze_tokens(test)
-print(t1.get_program())

@@ -1,9 +1,12 @@
+from MegaPentoo.Lexer.Lexer import *
+from MegaPentoo.Lexer.Tokens import *
+
 tests = [
     """
    // Hello, my little pidor. Today we'll programm your ass!
     
     proga Chika()
-        for i := 1 to 5
+        for i = 1 to 5
             begin
             pentoo("proga Chika is running")
             a = i + 4
@@ -33,11 +36,17 @@ tests = [
     lookin(task)
     while task not== 0
         begin 
-        pentoo("DICK");
-        task := task - 1
+        pentoo("DICK")
+        task = task - 1
         end    
     """,
     """
-    
+    lookin a
+    if a > 3 then 
+        print(a)
+    end
     """
 ]
+
+lx = Lexer()
+print(lx.lex(tests[1], token_exprs))

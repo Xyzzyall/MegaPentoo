@@ -37,6 +37,9 @@ class TAGS(Enum):
     STRING = 32
 
     ID_OR_NUM_OR_OPERATION = 33
+    IF_CHECK = 34
+    COMMAND = 35
+    WHILE_CHECK = 36
 
 token_exprs = [
     (r'[ \t]+',    None),

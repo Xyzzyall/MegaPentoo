@@ -26,3 +26,4 @@ class Lexer:
                 self.__pos__ = match.end(0)
         return tokens
     pass
+
