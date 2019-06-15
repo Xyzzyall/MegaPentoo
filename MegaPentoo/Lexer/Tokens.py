@@ -48,7 +48,6 @@ class TAGS(Enum):
 token_exprs = [
     (r'[ \t]+',    None),
     (r'//[^\n]*',  None),
-    (r'=',                     TAGS.ASSIGN),
     (r'\(',                    TAGS.SKOBA_LEFT),
     (r'\)',                    TAGS.SKOBA_RIGHT),
     (r'\n',                    TAGS.NEXT_CMD),
@@ -62,6 +61,7 @@ token_exprs = [
     (r'>=',                    TAGS.MORE_EQUAL),
     (r'>',                     TAGS.MORE),
     (r'==',                    TAGS.BOOL_EQUAL),
+    (r'=',                     TAGS.ASSIGN),
     (r'!=',                    TAGS.NON_EQUAL),
     (r'and',                   TAGS.AND),
     (r'or',                    TAGS.OR),

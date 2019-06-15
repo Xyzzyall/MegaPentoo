@@ -17,6 +17,9 @@ p = f.read()
 parser = Parser()
 parser.analyze_tokens(imp_lex(p))
 prog = parser.get_program()
+
+#fancy_out(prog)
+
 inter = Interpretator(prog)
 inter.run()
 

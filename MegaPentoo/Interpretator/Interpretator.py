@@ -30,7 +30,8 @@ class Interpretator:
             elif current_elem == "goto":
                 i = int(op1)-1
             elif current_elem == "print":
-                exec("print(" + op1 + ")", globals())
+                print(eval(op1, globals()))
+                #exec("print(" + op1 + ")", globals())
                 i = i + 1
             elif current_elem == "cond_goto":
                 if eval("condition", globals()):
@@ -40,7 +41,7 @@ class Interpretator:
                     i = int(op1)-1
             elif current_elem == "input":
                 inp = input()
-                exec(op1 + "= " + inp, globals())
+                exec(op1 + " = " + inp, globals())
             elif current_elem == "direct":
                 exec(op1, globals())
                 i += 1

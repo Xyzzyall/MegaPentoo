@@ -73,7 +73,10 @@ class Parser:
                             state = None
                             state_pos = 1
                         else:
-                            self.__str_buf__ += name
+                            if tag == TAGS.AND or tag == TAGS.OR:
+                                self.__str_buf__ += ' ' + name + ' '
+                            else:
+                                self.__str_buf__ += name
                 elif state == STATES.IF:
                     if state_pos == 1:
                         self.__str_buf__ += name
@@ -90,7 +93,10 @@ class Parser:
                             expected_token = TAGS.COMMAND
                             state_pos = 1
                         else:
-                            self.__str_buf__ += name
+                            if tag == TAGS.AND or tag == TAGS.OR:
+                                self.__str_buf__ += ' ' + name + ' '
+                            else:
+                                self.__str_buf__ += name
                 elif state == STATES.WHILE:
                     if state_pos == 1:
                         self.__str_buf__ += name
@@ -123,7 +129,7 @@ class Parser:
                         expected_token = None
                         state = None
                     else:
-                        self.__str_buf__ += name
+                        self.__str_buf__ +=  name
                 elif state == STATES.LIST:
                     self.__append_command__(name + "=Elem(0,None,None)")
                     state = None

@@ -1,34 +1,54 @@
-lookin a
-lookin b
-lookin c
+pentoo "Math Test:"
 
-while a > c do
-    a = a - c
-    b = b + a
-    pentoo "TICK"
-end
+pentoo "(5 + 5) * 1 - 10 / 2 = "
+a = (5 + 5) * 1 - 10 / 2
 pentoo a
-pentoo b
-pentoo c+1
 
-LinkedList foo
-foo.append(1)
-foo.append(2)
-foo.append(3)
-foo.append(4)
-foo.insert(2,10)
-pentoo foo
+pentoo "Boolean Test:"
 
-Set s
-s.put("Apple")
-s.put("Juice")
-s.put("Orange")
-s.put("Juice")
-s.put("Mac")
-pentoo s
-pentoo s.is_in("Mac")
-s.delete("Mac")
-pentoo s
-str = "pass"
-if not(s.is_in("Mac")) then
-    pentoo str
+pentoo "a=5,b=6,c=7,d=8"
+pentoo "a <= b :"
+a = 5
+b = 6
+c = 7
+d = 8
+if a <= b then
+    pentoo "pass"
+
+pentoo "d >= c : "
+if d >= c then
+    pentoo "pass"
+
+pentoo "a != b :"
+if a != b then
+    pentoo "pass"
+
+pentoo "a == b or c > d :"
+if not(a == b or c >= d) then
+    pentoo "false (pass)"
+
+pentoo "a != b and c < d :"
+if a != b and c < d then
+    pentoo "true (pass)"
+
+while d <= 10 do
+    a = a + b
+    d = d + 1
+    pentoo "while repeating"
+    end
+pentoo a
+
+pentoo "Linked List Test:"
+
+LinkedList Kai
+Kai.append(7)
+Kai.append(3)
+Kai.append(16)
+pentoo Kai
+Kai.insert(1,20)
+pentoo Kai
+Kai.delete(2)
+pentoo Kai.index(0)
+pentoo Kai.get_last()[0]
+pentoo Kai.get_last()[1]+1
+pentoo Kai.index(0)
