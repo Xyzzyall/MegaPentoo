@@ -11,9 +11,12 @@ def fancy_out(code):
 
 
 test1 = """
-    lookin a
-    lookin b
-    lookin c
+    //lookin a
+    //lookin b
+    //lookin c
+    a = 5
+    b = 3
+    c = 2
     
     while a > c do
         a = a - c
@@ -31,13 +34,26 @@ test1 = """
     foo.append(4)
     foo.insert(2,10)
     pentoo foo
+    
+    Set s
+    s.put("Apple")
+    s.put("Juice")
+    s.put("Orange")
+    s.put("Juice")
+    s.put("Mac")
+    pentoo s
+    pentoo s.is_in("Mac")
+    s.delete("Mac")
+    pentoo s
+    if not(s.is_in("Mac")) then
+        pentoo "pass"
 """
 
 
 t1 = Parser()
 t1.analyze_tokens(imp_lex(test1))
 prog = t1.get_program()
-fancy_out(prog)
+#fancy_out(prog)
 
 print()
 
