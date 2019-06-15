@@ -22,7 +22,6 @@ class Interpretator:
                 op2 = self.program[i + 2]
 
             if current_elem == "write_to":
-
                 exec(op1 + " = " + op2, globals())
                 i = i + 2
             elif current_elem == "write_cond":
@@ -42,6 +41,9 @@ class Interpretator:
             elif current_elem == "input":
                 inp = input()
                 exec(op1 + "= " + inp, globals())
+            elif current_elem == "direct":
+                exec(op1)
+                i += 1
 
             i = i + 1
 

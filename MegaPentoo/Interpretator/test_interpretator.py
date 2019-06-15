@@ -16,13 +16,15 @@ test1 = """
     lookin c
     
     while a > c do
-        a = a - 1
+        a = a - c
         b = b + a
-        pentoo "DICK" 
+        pentoo "TICK" 
     end
     pentoo a
     pentoo b
     pentoo c+1
+    
+    
 """
 
 

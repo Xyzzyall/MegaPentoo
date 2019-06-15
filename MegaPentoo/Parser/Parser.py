@@ -8,6 +8,7 @@ class STATES(Enum):
     WHILE = 2
     PRINT = 3
     INPUT = 4
+    LIST = 5
 
 
 class Parser:
@@ -20,7 +21,7 @@ class Parser:
                        tag == TAGS.PLUS or tag == TAGS.BOOL_EQUAL or tag == TAGS.NOT or tag == TAGS.OR or \
                        tag == TAGS.INT or tag == TAGS.TRUE or tag == TAGS.SKOBA_LEFT or tag == TAGS.SKOBA_RIGHT or \
                        tag == TAGS.MINUS or tag == TAGS.MORE or tag == TAGS.LESS or tag == TAGS.LESS_EQUAL or \
-                       tag == TAGS.STRING #or tag == TAGS.COMMA
+                       tag == TAGS.STRING or tag == TAGS.CLASS_OBJECT
 
         command = not (tag == TAGS.AND or tag == TAGS.DIV or tag == TAGS.MULTI or \
                        tag == TAGS.PLUS or tag == TAGS.BOOL_EQUAL or tag == TAGS.NOT or tag == TAGS.OR or \
@@ -122,6 +123,10 @@ class Parser:
                         state = None
                     else:
                         self.__str_buf__ += name
+                elif state == STATES.LIST:
+                    self.__append_command__(name)
+                    state = None
+                    expected_token = None
 
             else:
                 if tag == TAGS.ID:
@@ -153,6 +158,14 @@ class Parser:
                     self.__append_command__("input")
                     expected_token = TAGS.ID_OR_NUM_OR_OPERATION
                     state = STATES.INPUT
+                elif tag == TAGS.CLASS_OBJECT:
+                    self.__append_command__("direct")
+                    self.__append_command__(name)
+                elif tag == TAGS.LINKED_LIST:
+                    expected_token = TAGS.ID
+                    self.__append_command__("direct")
+
+
 
     __backturns_stack__ = list()
 
