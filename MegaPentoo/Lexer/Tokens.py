@@ -41,6 +41,8 @@ class TAGS(Enum):
     COMMAND = 35
     WHILE_CHECK = 36
 
+    CLASS_OBJECT = 37
+
 token_exprs = [
     (r'[ \t]+',    None),
     (r'//[^\n]*',  None),
@@ -77,5 +79,6 @@ token_exprs = [
     (r'proga',                 TAGS.PROGA),   # function analog
     (r'[0-9]+',                TAGS.INT),
     (r'[A-Za-z][A-Za-z0-9_]*', TAGS.ID),
+    (r'[A-Za-z][A-Za-z0-9_][.]*', TAGS.CLASS_OBJECT),
     (r'".+"',                  TAGS.STRING),
 ]

@@ -21,6 +21,8 @@ test1 = """
     while c > 1 do
         b = b + 1
     end
+    pentoo a + b
+    lookin c
 """
 
 

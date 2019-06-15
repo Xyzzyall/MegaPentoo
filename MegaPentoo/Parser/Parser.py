@@ -6,6 +6,8 @@ class STATES(Enum):
     ASSIGNING = 0
     IF = 1
     WHILE = 2
+    PRINT = 3
+    INPUT = 4
 
 
 class Parser:
@@ -18,7 +20,7 @@ class Parser:
                        tag == TAGS.PLUS or tag == TAGS.BOOL_EQUAL or tag == TAGS.NOT or tag == TAGS.OR or \
                        tag == TAGS.INT or tag == TAGS.TRUE or tag == TAGS.SKOBA_LEFT or tag == TAGS.SKOBA_RIGHT or \
                        tag == TAGS.MINUS or tag == TAGS.MORE or tag == TAGS.LESS or tag == TAGS.LESS_EQUAL or \
-                       tag == TAGS.STRING
+                       tag == TAGS.STRING #or tag == TAGS.COMMA
 
         command = not (tag == TAGS.AND or tag == TAGS.DIV or tag == TAGS.MULTI or \
                        tag == TAGS.PLUS or tag == TAGS.BOOL_EQUAL or tag == TAGS.NOT or tag == TAGS.OR or \
@@ -104,6 +106,22 @@ class Parser:
                             state_pos = 1
                         else:
                             self.__str_buf__ += name
+                elif state == STATES.PRINT:
+                    if tag == TAGS.NEXT_CMD:
+                        self.__append_command__(self.__str_buf__)
+                        self.__str_buf__ = ""
+                        expected_token = None
+                        state = None
+                    else:
+                        self.__str_buf__ += name
+                elif state == STATES.INPUT:
+                    if tag == TAGS.NEXT_CMD:
+                        self.__append_command__(self.__str_buf__)
+                        self.__str_buf__ = ""
+                        expected_token = None
+                        state = None
+                    else:
+                        self.__str_buf__ += name
 
             else:
                 if tag == TAGS.ID:
@@ -121,13 +139,20 @@ class Parser:
                         self.__program__[b_pos2] = str(self.__cur_cmd__)
                     elif b_tag == TAGS.WHILE:
                         self.__append_command__("goto")
-                        self.__append_command__(str(b_pos1))
+                        self.__append_command__(str(b_pos1-2))
                         self.__program__[b_pos2] = str(self.__cur_cmd__)
-
                 elif tag == TAGS.WHILE:
                     self.__append_command__("write_cond")
                     state = STATES.WHILE
                     expected_token = TAGS.ID_OR_NUM_OR_OPERATION
+                elif tag == TAGS.PENTOO:
+                    self.__append_command__("print")
+                    expected_token = TAGS.ID_OR_NUM_OR_OPERATION
+                    state = STATES.PRINT
+                elif tag == TAGS.LOOKIN:
+                    self.__append_command__("input")
+                    expected_token = TAGS.ID_OR_NUM_OR_OPERATION
+                    state = STATES.INPUT
 
     __backturns_stack__ = list()
 

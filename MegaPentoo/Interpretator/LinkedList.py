@@ -60,26 +60,3 @@ class Elem:
             buf = buf.next
         return res + "]"
 
-
-test = Elem(1, None, None)
-
-test.append(2)
-test.append(3)
-test.append(4)
-
-print(test)
-
-test.insert(1, 228)
-
-print(test)
-
-test.insert(4, 999)
-
-print(test)
-
-test.delete(2)
-
-print(test)
-print(test.get_last()[0].val)
-print(test.get_last()[1]+1)
-print(test.index(5).val)
