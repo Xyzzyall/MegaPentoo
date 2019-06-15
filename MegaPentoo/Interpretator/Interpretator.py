@@ -1,5 +1,5 @@
 from MegaPentoo.Interpretator.LinkedList import Elem
-
+from MegaPentoo.Interpretator.HashSet import HashSet
 
 class Interpretator:
     program = list()

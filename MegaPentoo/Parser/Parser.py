@@ -9,6 +9,7 @@ class STATES(Enum):
     PRINT = 3
     INPUT = 4
     LIST = 5
+    SET = 6
 
 
 class Parser:
@@ -124,11 +125,13 @@ class Parser:
                     else:
                         self.__str_buf__ += name
                 elif state == STATES.LIST:
-                    print(state)
                     self.__append_command__(name + "=Elem(0,None,None)")
                     state = None
                     expected_token = None
-
+                elif state == STATES.SET:
+                    self.__append_command__(name + "=HashSet()")
+                    state = None
+                    expected_token = None
             else:
                 if tag == TAGS.ID:
                     expected_token = TAGS.ASSIGN
@@ -165,6 +168,10 @@ class Parser:
                 elif tag == TAGS.LINKED_LIST:
                     expected_token = TAGS.ID
                     state = STATES.LIST
+                    self.__append_command__("direct")
+                elif tag == TAGS.HASH_SET:
+                    expected_token = TAGS.ID
+                    state = STATES.SET
                     self.__append_command__("direct")
 
 

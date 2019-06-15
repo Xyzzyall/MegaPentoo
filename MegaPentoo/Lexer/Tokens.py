@@ -43,6 +43,7 @@ class TAGS(Enum):
 
     CLASS_OBJECT = 37
     LINKED_LIST = 38
+    HASH_SET = 39
 
 token_exprs = [
     (r'[ \t]+',    None),
@@ -80,7 +81,8 @@ token_exprs = [
     (r'proga',                 TAGS.PROGA),   # function analog
     (r'[0-9]+',                TAGS.INT),
     (r'LinkedList', TAGS.LINKED_LIST),
-    (r'[A-Za-z][A-Za-z0-9_]*[\.][A-Za-z][A-Za-z0-9-(-)-,_]*', TAGS.CLASS_OBJECT),
+    (r'Set', TAGS.HASH_SET),
+    (r'[A-Za-z][A-Za-z0-9_]*[\.][A-Za-z][A-Za-z0-9-"-\_-(-)-,]*', TAGS.CLASS_OBJECT),
     (r'[A-Za-z][A-Za-z0-9_]*', TAGS.ID),
     (r'".+"',                  TAGS.STRING)
 ]
