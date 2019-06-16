@@ -1,6 +1,6 @@
 from MegaPentoo.Lexer.ImpLexer import *
 from MegaPentoo.Parser.Parser import *
-from MegaPentoo.Interpretator.Interpretator import *
+from MegaPentoo.VM.VM import *
 import sys
 
 
@@ -11,16 +11,18 @@ def fancy_out(code):
         i += 1
 
 
-f = open(sys.argv[1])
-p = f.read()
+try:
+    f = open(sys.argv[1])
+    p = f.read()
 
-parser = Parser()
-parser.analyze_tokens(imp_lex(p))
-prog = parser.get_program()
+    parser = Parser()
+    parser.analyze_tokens(imp_lex(p))
+    prog = parser.get_program()
 
-#fancy_out(prog)
+    fancy_out(prog)
 
-inter = Interpretator(prog)
-inter.run()
+    inter = VM(prog)
+    inter.run()
 
-input("Program ended. Press any key.")
+    input("Program ended. Press any key.")
+except Exception: pass

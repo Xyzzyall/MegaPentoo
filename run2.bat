@@ -1,2 +1,2 @@
-py __init__.py test2
+py mega_pentoo.py test2
 PAUSE

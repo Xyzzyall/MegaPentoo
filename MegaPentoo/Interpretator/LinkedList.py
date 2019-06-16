@@ -17,6 +17,8 @@ class Elem:
         while i < ind:
             buf = buf.next
             i += 1
+            if not buf:
+                return None
 
         return buf
 
@@ -30,7 +32,7 @@ class Elem:
 
     def append(self, val):
         last = self.get_last()[0]
-        L = Elem(val, None, self)
+        L = Elem(val, None, last)
         last.next = L
 
     def insert(self, i, val):
@@ -46,12 +48,26 @@ class Elem:
             if e2:
                 e2.prev = L
 
-    def delete(self, i):
+    def delete_index(self, i):
         e1 = self.index(i)
         e0 = e1.prev
         e2 = e1.next
         e0.next = e2
         e2.prev = e0
+
+    def find_index_of(self, val):
+        buf = self
+        i = 0
+        while not val == buf.val:
+            i += 1
+            buf = buf.next
+            if not buf:
+                return None
+        else:
+            return i
+
+    def delete_val(self, val):
+        self.delete_index(self.find_index_of(val))
 
     def __str__(self):
         res = "[" + str(self.val)

@@ -1,16 +1,27 @@
-pentoo "testing sets"
-Choice = 1
-Set s
-while Choice != 0 do
-    pentoo "1: append to set, 2: delete from set, 0: exit"
-    lookin Choice
-    if Choice == 1 then
-        lookin elem
-        s.put(elem)
-    end
-    if Choice == 2 then
-        lookin elem
-        s.delete(elem)
-    end
-    pentoo s
+lookin a
+lookin b
+
+c = a - b
+if c == 10 then
+    pentoo 10
+end
+
+if a > b then
+    pentoo a
+end
+
+if a < b or b == 21  then
+    pentoo a + b
+end
+
+i = 0
+j = 0
+
+while i < a do
+     i = i + 1
+     while j < b do
+        j = j + 1
+        pentoo i*1000 + j
+     end
+     j = 0
 end

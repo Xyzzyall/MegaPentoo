@@ -5,7 +5,7 @@ from MegaPentoo.Parser.Parser import *
 def fancy_out(code):
     i = 0
     for cmd in code:
-        print(str(i) + ": " + cmd)
+        print(str(i) + ": " + str(cmd))
         i += 1
 
 
